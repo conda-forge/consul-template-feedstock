@@ -1,5 +1,5 @@
 {% set name = "consul-template" %}
-{% set version = "0.19.5" %}
+{% set version = "0.20.0" %}
 
 package:
   name: {{ name|lower }}
@@ -16,7 +16,7 @@ source:
     sha256: 01a2d2979623efb95067251b569cc2020b36fbfafdca0e9cd6b4fb7f14805712  # [win64]
 
 build:
-  number: 1000
+  number: 0
 
 requirements:
   build:
