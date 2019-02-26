@@ -24,7 +24,7 @@ build:
 
 requirements:
   build:
-    - {{ compiler('go') }}  # [not win]
+    - {{ compiler('go') }}
 
 test:
   commands:
