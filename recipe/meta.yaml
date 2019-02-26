@@ -1,28 +1,30 @@
-{% set name = "consul-template" %}
+{% set import_path = "github.com/hashicorp/consul-template" %}
 {% set version = "0.20.0" %}
+
+{% set name = import_path.split('/')[-1] %}
+{% set pkg_src = 'src' + os.sep+ import_path.replace("/",os.sep) %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz  # [not win]
-    fn: {{ name }}-{{ version }}.tar.gz  # [not win]
-    sha256: d10dbd1f332f1882c433f410a0704a84de405ba3068f285f9c23704701ee3d73  # [not win]
-    folder: src/github.com/hashicorp/{{ name }}  # [not win]
+  - folder: {{ pkg_src }}
+    git_url: https://{{ import_path }}
+    git_tag: v{{ version }}
+    url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz  # [false]
+    sha256: d10dbd1f332f1882c433f410a0704a84de405ba3068f285f9c23704701ee3d73  # [false]
 
-  - url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_amd64.zip  # [win64]
-    fn: {{ name }}-{{ version }}.zip  # [win]
-    sha256: 01a2d2979623efb95067251b569cc2020b36fbfafdca0e9cd6b4fb7f14805712  # [win64]
 
 build:
   number: 0
+  script:
+    - pushd {{ pkg_src }}
+    - go install -v .
 
 requirements:
   build:
     - {{ compiler('go') }}  # [not win]
-    - git  # [not win]
-    - make  # [not win]
 
 test:
   commands:
