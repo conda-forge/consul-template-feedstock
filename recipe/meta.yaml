@@ -1,5 +1,6 @@
+{% set git_import = "github.com/hashicorp/consul-template/version" %}
 {% set name = "consul-template" %}
-{% set version = "0.21.0" %}
+{% set version = "0.24.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +8,7 @@ package:
 
 source:
   url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: e74060390f5b9aeb2e0776678708827304e4908b9c145428b1971969c1c5ce1a
+  sha256: 96449a4bdf9f547dd2bed079a07941e56bbc27c1d2e841f5c4edc3b71c78ab93
 
 build:
   number: 0
@@ -29,12 +30,12 @@ about:
   license_file: LICENSE
   summary: Consul-template is a daemon that provides a convenient way to populate values from Consul into the file system.
   description: |
-     Consul-template is a daemon that provides a convenient way to populate values from 
-     Consul into the file system.
+    Consul-template is a daemon that provides a convenient way to populate values from 
+    Consul into the file system.
 
-     The daemon consul-template queries a Consul or Vault cluster and updates any number 
-     of specified templates on the file system. As an added bonus, it can optionally run 
-     arbitrary commands when the update process completes. 
+    The daemon consul-template queries a Consul or Vault cluster and updates any number 
+    of specified templates on the file system. As an added bonus, it can optionally run 
+    arbitrary commands when the update process completes. 
 
   doc_url: https://github.com/hashicorp/consul-template/blob/v{{ version }}/README.md
 
