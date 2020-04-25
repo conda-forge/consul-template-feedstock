@@ -1,38 +1,32 @@
-{% set import_path = "github.com/hashicorp/consul-template" %}
-{% set version = "0.20.0" %}
-
-{% set name = import_path.split('/')[-1] %}
-{% set pkg_src = 'src' + os.sep+ import_path.replace("/",os.sep) %}
+{% set name = "consul-template" %}
+{% set version = "0.21.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - folder: {{ pkg_src }}
-    git_url: https://{{ import_path }}
-    git_tag: v{{ version }}
-    url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz  # [false]
-    sha256: d10dbd1f332f1882c433f410a0704a84de405ba3068f285f9c23704701ee3d73  # [false]
-
+  url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz
+  sha256: e74060390f5b9aeb2e0776678708827304e4908b9c145428b1971969c1c5ce1a
 
 build:
   number: 0
   script:
-    - pushd {{ pkg_src }}
-    - go install -v .
+    {% set git_import = "github.com/hashicorp/consul-template/version" %}
+    - go install -v -ldflags "-X {{ git_import }}.Name={{ name }} -X {{ git_import }}.GitCommit=''" .
 
 requirements:
   build:
-    - {{ compiler('go') }}
+    - {{ compiler('go') }} 1.13
 
 test:
   commands:
-    - {{ name|lower }} -v
+    - consul-template --version
 
 about:
-  home: https://github.com/hashicorp/consul-tempate
-  license: MPL 2.0
+  home: https://github.com/hashicorp/consul-template
+  license: MPL-2.0
+  license_file: LICENSE
   summary: Consul-template is a daemon that provides a convenient way to populate values from Consul into the file system.
   description: |
      Consul-template is a daemon that provides a convenient way to populate values from 
