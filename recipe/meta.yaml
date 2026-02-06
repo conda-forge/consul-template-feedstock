@@ -11,7 +11,7 @@ source:
   sha256: 96449a4bdf9f547dd2bed079a07941e56bbc27c1d2e841f5c4edc3b71c78ab93
 
 build:
-  number: 0
+  number: 1
   script:
     {% set git_import = "github.com/hashicorp/consul-template/version" %}
     - go install -v -ldflags "-X {{ git_import }}.Name={{ name }} -X {{ git_import }}.GitCommit=''" .
